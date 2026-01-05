@@ -3,230 +3,555 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Full Stack Developer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Muhammad Rizky - Fullstack Developer Portfolio</title>
     <style>
-        .carousel-container { position: relative; overflow: hidden; }
-        .carousel-track { display: flex; transition: transform 0.3s ease-in-out; }
-        .carousel-slide { min-width: 100%; }
-        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 12px; cursor: pointer; border-radius: 50%; z-index: 10; transition: background 0.2s; }
-        .carousel-btn:hover { background: rgba(0,0,0,0.8); }
-        .carousel-btn.prev { left: 8px; }
-        .carousel-btn.next { right: 8px; }
-        .carousel-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 10; }
-        .carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: background 0.2s; }
-        .carousel-dot.active { background: white; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #333;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav li {
+            margin: 0 1.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        section {
+            background: white;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        section h2 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .profile-image {
+            width: 100%;
+            max-width: 250px;
+            border-radius: 50%;
+            border: 5px solid #667eea;
+        }
+
+        .contact-info {
+            margin-top: 1rem;
+        }
+
+        .contact-info p {
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-info a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .skill-category {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .skill-category h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-category ul {
+            list-style: none;
+        }
+
+        .skill-category li {
+            padding: 0.25rem 0;
+        }
+
+        .skill-category li:before {
+            content: "▹ ";
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Project Carousel Styles */
+        .carousel-container {
+            position: relative;
+            max-width: 100%;
+            margin: 2rem auto;
+            overflow: hidden;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .project-card {
+            min-width: 100%;
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .project-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .project-card p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            background: #667eea;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .carousel-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .carousel-btn:hover {
+            background: #764ba2;
+        }
+
+        .carousel-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ccc;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .indicator.active {
+            background: #667eea;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .profile-image {
+                margin: 0 auto;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav li {
+                margin: 0.5rem 0;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
-    <div class="max-w-5xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-        <header class="text-center mb-16">
-            <img src="https://via.placeholder.com/150" alt="Profile Photo" class="w-36 h-36 rounded-full mx-auto mb-6 shadow-lg object-cover">
-            <h1 class="text-4xl font-bold text-gray-900 mb-2">Your Name</h1>
-            <p class="text-xl text-blue-600 mb-4">Full Stack Developer (Web & Mobile)</p>
-            <p class="text-gray-600 max-w-2xl mx-auto mb-6 leading-relaxed">
-                Experienced developer specializing in modern web and mobile applications. 
-                Passionate about creating scalable, user-friendly solutions with clean code and best practices.
-            </p>
-            <div class="flex flex-wrap justify-center gap-4 text-sm">
-                <a href="mailto:your.email@example.com" class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
-                    your.email@example.com
-                </a>
-                <a href="tel:+1234567890" class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
-                    +1 (234) 567-890
-                </a>
-                <a href="#" target="_blank" class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path></svg>
-                    GitHub
-                </a>
-                <a href="#" target="_blank" class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z"></path></svg>
-                    LinkedIn
-                </a>
-            </div>
-        </header>
+<body>
+    <header>
+        <div class="container">
+            <h1>Muhammad Rizky</h1>
+            <p>Fullstack Developer</p>
+        </div>
+    </header>
 
-        <section class="mb-16">
-            <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Featured Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition">
-                    <div class="carousel-container h-48">
-                        <div class="carousel-track" data-carousel="0">
-                            <div class="carousel-slide"><img src="https://via.placeholder.com/600x400/4F46E5/ffffff?text=E-Commerce+1" alt="Screenshot 1" class="w-full h-48 object-cover"></div>
-                            <div class="carousel-slide"><img src="https://via.placeholder.com/600x400/7C3AED/ffffff?text=E-Commerce+2" alt="Screenshot 2" class="w-full h-48 object-cover"></div>
-                            <div class="carousel-slide"><img src="https://via.placeholder.com/600x400/DB2777/ffffff?text=E-Commerce+3" alt="Screenshot 3" class="w-full h-48 object-cover"></div>
-                        </div>
-                        <button class="carousel-btn prev" onclick="moveCarousel(0, -1)">‹</button>
-                        <button class="carousel-btn next" onclick="moveCarousel(0, 1)">›</button>
-                        <div class="carousel-dots">
-                            <span class="carousel-dot active" onclick="goToSlide(0, 0)"></span>
-                            <span class="carousel-dot" onclick="goToSlide(0, 1)"></span>
-                            <span class="carousel-dot" onclick="goToSlide(0, 2)"></span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">E-Commerce Platform</h3>
-                        <p class="text-gray-600 mb-4">Full-featured online shopping application with real-time inventory management and secure payment integration.</p>
-                        <div class="mb-4">
-                            <p class="text-sm font-medium text-gray-700 mb-2">Responsibilities:</p>
-                            <ul class="text-sm text-gray-600 list-disc list-inside space-y-1">
-                                <li>Developed responsive frontend interface</li>
-                                <li>Implemented RESTful API backend</li>
-                                <li>Integrated payment gateway</li>
-                            </ul>
-                        </div>
-                        <p class="text-xs text-gray-500 mb-4">React • Node.js • MongoDB • Stripe</p>
-                        <div class="flex flex-wrap gap-2">
-                            <a href="#" class="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition">Website</a>
-                            <a href="#" class="px-4 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition">Google Play</a>
-                            <a href="#" class="px-4 py-2 bg-gray-800 text-white text-sm rounded-lg hover:bg-gray-900 transition">App Store</a>
-                        </div>
-                    </div>
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <section id="about">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div>
+                    <img src="https://via.placeholder.com/250" alt="Muhammad Rizky" class="profile-image">
                 </div>
-
-                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition">
-                    <div class="carousel-container h-48">
-                        <div class="carousel-track" data-carousel="1">
-                            <div class="carousel-slide"><img src="https://via.placeholder.com/600x400/059669/ffffff?text=Task+Manager+1" alt="Screenshot 1" class="w-full h-48 object-cover"></div>
-                            <div class="carousel-slide"><img src="https://via.placeholder.com/600x400/DC2626/ffffff?text=Task+Manager+2" alt="Screenshot 2" class="w-full h-48 object-cover"></div>
-                            <div class="carousel-slide"><img src="https://via.placeholder.com/600x400/EA580C/ffffff?text=Task+Manager+3" alt="Screenshot 3" class="w-full h-48 object-cover"></div>
-                        </div>
-                        <button class="carousel-btn prev" onclick="moveCarousel(1, -1)">‹</button>
-                        <button class="carousel-btn next" onclick="moveCarousel(1, 1)">›</button>
-                        <div class="carousel-dots">
-                            <span class="carousel-dot active" onclick="goToSlide(1, 0)"></span>
-                            <span class="carousel-dot" onclick="goToSlide(1, 1)"></span>
-                            <span class="carousel-dot" onclick="goToSlide(1, 2)"></span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Task Management App</h3>
-                        <p class="text-gray-600 mb-4">Collaborative project management tool with real-time updates, team chat, and progress tracking features.</p>
-                        <div class="mb-4">
-                            <p class="text-sm font-medium text-gray-700 mb-2">Responsibilities:</p>
-                            <ul class="text-sm text-gray-600 list-disc list-inside space-y-1">
-                                <li>Built cross-platform mobile application</li>
-                                <li>Designed database architecture</li>
-                                <li>Implemented real-time synchronization</li>
-                            </ul>
-                        </div>
-                        <p class="text-xs text-gray-500 mb-4">React Native • Firebase • Redux • WebSocket</p>
-                        <div class="flex flex-wrap gap-2">
-                            <a href="#" class="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition">Website</a>
-                            <a href="#" class="px-4 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition">Google Play</a>
-                            <a href="#" class="px-4 py-2 bg-gray-800 text-white text-sm rounded-lg hover:bg-gray-900 transition">App Store</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition">
-                    <div class="carousel-container h-48">
-                        <div class="carousel-track" data-carousel="2">
-                            <div class="carousel-slide"><img src="https://via.placeholder.com/600x400/0891B2/ffffff?text=Healthcare+1" alt="Screenshot 1" class="w-full h-48 object-cover"></div>
-                            <div class="carousel-slide"><img src="https://via.placeholder.com/600x400/7C3AED/ffffff?text=Healthcare+2" alt="Screenshot 2" class="w-full h-48 object-cover"></div>
-                        </div>
-                        <button class="carousel-btn prev" onclick="moveCarousel(2, -1)">‹</button>
-                        <button class="carousel-btn next" onclick="moveCarousel(2, 1)">›</button>
-                        <div class="carousel-dots">
-                            <span class="carousel-dot active" onclick="goToSlide(2, 0)"></span>
-                            <span class="carousel-dot" onclick="goToSlide(2, 1)"></span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Healthcare Dashboard</h3>
-                        <p class="text-gray-600 mb-4">Enterprise web application for managing patient records, appointments, and medical data analytics.</p>
-                        <div class="mb-4">
-                            <p class="text-sm font-medium text-gray-700 mb-2">Responsibilities:</p>
-                            <ul class="text-sm text-gray-600 list-disc list-inside space-y-1">
-                                <li>Created admin dashboard interface</li>
-                                <li>Implemented data visualization</li>
-                                <li>Ensured HIPAA compliance</li>
-                            </ul>
-                        </div>
-                        <p class="text-xs text-gray-500 mb-4">Vue.js • Laravel • PostgreSQL • Chart.js</p>
-                        <div class="flex flex-wrap gap-2">
-                            <a href="#" class="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition">Website</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition">
-                    <div class="carousel-container h-48">
-                        <div class="carousel-track" data-carousel="3">
-                            <div class="carousel-slide"><img src="https://via.placeholder.com/600x400/DC2626/ffffff?text=Food+Delivery+1" alt="Screenshot 1" class="w-full h-48 object-cover"></div>
-                            <div class="carousel-slide"><img src="https://via.placeholder.com/600x400/EA580C/ffffff?text=Food+Delivery+2" alt="Screenshot 2" class="w-full h-48 object-cover"></div>
-                            <div class="carousel-slide"><img src="https://via.placeholder.com/600x400/F59E0B/ffffff?text=Food+Delivery+3" alt="Screenshot 3" class="w-full h-48 object-cover"></div>
-                            <div class="carousel-slide"><img src="https://via.placeholder.com/600x400/10B981/ffffff?text=Food+Delivery+4" alt="Screenshot 4" class="w-full h-48 object-cover"></div>
-                        </div>
-                        <button class="carousel-btn prev" onclick="moveCarousel(3, -1)">‹</button>
-                        <button class="carousel-btn next" onclick="moveCarousel(3, 1)">›</button>
-                        <div class="carousel-dots">
-                            <span class="carousel-dot active" onclick="goToSlide(3, 0)"></span>
-                            <span class="carousel-dot" onclick="goToSlide(3, 1)"></span>
-                            <span class="carousel-dot" onclick="goToSlide(3, 2)"></span>
-                            <span class="carousel-dot" onclick="goToSlide(3, 3)"></span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Food Delivery Service</h3>
-                        <p class="text-gray-600 mb-4">Mobile-first platform connecting restaurants with customers, featuring real-time order tracking and driver management.</p>
-                        <div class="mb-4">
-                            <p class="text-sm font-medium text-gray-700 mb-2">Responsibilities:</p>
-                            <ul class="text-sm text-gray-600 list-disc list-inside space-y-1">
-                                <li>Developed customer and driver apps</li>
-                                <li>Integrated geolocation services</li>
-                                <li>Built order management system</li>
-                            </ul>
-                        </div>
-                        <p class="text-xs text-gray-500 mb-4">Flutter • Django • PostgreSQL • Google Maps API</p>
-                        <div class="flex flex-wrap gap-2">
-                            <a href="#" class="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition">Website</a>
-                            <a href="#" class="px-4 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition">Google Play</a>
-                            <a href="#" class="px-4 py-2 bg-gray-800 text-white text-sm rounded-lg hover:bg-gray-900 transition">App Store</a>
-                        </div>
+                <div>
+                    <p>Fullstack Developer with 5+ years of experience building scalable web and mobile applications. Skilled in Node.js, Vue.js/React, Flutter, and Kotlin/Swift, with strong expertise in designing RESTful APIs, CI/CD automation (Jenkins), and optimizing databases (MySQL, PostgreSQL).</p>
+                    <p>I specialize in creating robust, user-friendly solutions that bridge the gap between complex backend systems and intuitive frontend interfaces. My experience spans across mobile development (Android & iOS), web applications, IoT systems, and enterprise solutions.</p>
+                    <div class="contact-info">
+                        <p><strong>📧 Email:</strong> <a href="mailto:muhammadrizky060@gmail.com">muhammadrizky060@gmail.com</a></p>
+                        <p><strong>📱 Phone:</strong> <a href="tel:+6285270708929">+62 852-7070-8929</a></p>
+                        <p><strong>💼 GitHub:</strong> <a href="https://github.com/mrzky" target="_blank">github.com/mrzky</a></p>
+                        <p><strong>🔗 LinkedIn:</strong> <a href="https://linkedin.com/in/muhammad-rizky-bba959154" target="_blank">linkedin.com/in/muhammad-rizky-bba959154</a></p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <footer class="text-center py-8 border-t border-gray-200">
-            <p class="text-gray-700 font-medium mb-2">© 2026 Your Name. All rights reserved.</p>
-            <p class="text-sm text-gray-500">Representative projects. Some applications are under NDA.</p>
-        </footer>
+        <section id="skills">
+            <h2>Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Backend Development</h3>
+                    <ul>
+                        <li>Node.js</li>
+                        <li>RESTful APIs</li>
+                        <li>MySQL</li>
+                        <li>PostgreSQL</li>
+                        <li>Redis</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Frontend Development</h3>
+                    <ul>
+                        <li>Vue.js</li>
+                        <li>React</li>
+                        <li>HTML/CSS</li>
+                        <li>JavaScript</li>
+                        <li>Responsive Design</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Mobile Development</h3>
+                    <ul>
+                        <li>Flutter</li>
+                        <li>Kotlin</li>
+                        <li>Swift</li>
+                        <li>Android Studio</li>
+                        <li>Xcode</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>DevOps & Tools</h3>
+                    <ul>
+                        <li>Jenkins</li>
+                        <li>CI/CD</li>
+                        <li>Git</li>
+                        <li>Firebase</li>
+                        <li>Payment Gateways</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>IoT & Integration</h3>
+                    <ul>
+                        <li>Tuya Platform</li>
+                        <li>TTLock API</li>
+                        <li>IoT Systems</li>
+                        <li>Third-party APIs</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Featured Projects</h2>
+            <div class="carousel-container">
+                <div class="carousel" id="projectCarousel">
+                    <div class="project-card">
+                        <h3>HRIS Employee Self-Service Mobile App</h3>
+                        <p>Developed a comprehensive Human Resource Information System mobile application that enables employees to access HR services on-the-go. The app includes features for leave management, attendance tracking, payroll information, and employee profile management.</p>
+                        <p><strong>Key Features:</strong></p>
+                        <ul>
+                            <li>Real-time attendance check-in/check-out with GPS verification</li>
+                            <li>Leave request and approval workflow</li>
+                            <li>Payslip viewing and download</li>
+                            <li>Employee directory and organizational chart</li>
+                            <li>Push notifications for important HR updates</li>
+                        </ul>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Kotlin</span>
+                            <span class="tech-tag">Swift</span>
+                            <span class="tech-tag">Android Studio</span>
+                            <span class="tech-tag">Xcode</span>
+                            <span class="tech-tag">RESTful API</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>POS System</h3>
+                        <p>Built a full-featured Point of Sale system for retail businesses with real-time inventory management, sales tracking, and reporting capabilities. The system supports multiple payment methods and provides detailed analytics for business insights.</p>
+                        <p><strong>Key Features:</strong></p>
+                        <ul>
+                            <li>Fast and intuitive checkout interface</li>
+                            <li>Real-time inventory synchronization</li>
+                            <li>Multi-store management</li>
+                            <li>Sales reports and analytics dashboard</li>
+                            <li>Customer loyalty program integration</li>
+                            <li>Receipt printing and email delivery</li>
+                        </ul>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">Vue.js</span>
+                            <span class="tech-tag">MySQL</span>
+                            <span class="tech-tag">Redis</span>
+                            <span class="tech-tag">RESTful API</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>IoT Booking System</h3>
+                        <p>Designed and implemented an innovative IoT-based booking system that integrates smart locks and automated access control. The system enables seamless reservations for spaces (meeting rooms, co-working spaces, etc.) with automated door access and payment processing.</p>
+                        <p><strong>Key Features:</strong></p>
+                        <ul>
+                            <li>Real-time availability and booking management</li>
+                            <li>Automated smart lock integration (TTLock)</li>
+                            <li>IoT device control via Tuya platform</li>
+                            <li>Integrated payment gateway for seamless transactions</li>
+                            <li>Booking confirmation and access code delivery</li>
+                            <li>Usage analytics and reporting</li>
+                        </ul>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">Vue.js</span>
+                            <span class="tech-tag">Tuya</span>
+                            <span class="tech-tag">TTLock</span>
+                            <span class="tech-tag">Payment Gateway</span>
+                            <span class="tech-tag">IoT</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>Self-Order Mobile App</h3>
+                        <p>Created a self-service ordering mobile application for restaurants and cafes, allowing customers to browse menus, place orders, and make payments directly from their smartphones. The app reduces wait times and improves customer experience.</p>
+                        <p><strong>Key Features:</strong></p>
+                        <ul>
+                            <li>Digital menu with rich product images and descriptions</li>
+                            <li>Customizable order options and add-ons</li>
+                            <li>Real-time order tracking and status updates</li>
+                            <li>Multiple payment methods integration</li>
+                            <li>Order history and favorite items</li>
+                            <li>Push notifications for order updates</li>
+                            <li>QR code scanning for table identification</li>
+                        </ul>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Flutter</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">Payment Gateway</span>
+                            <span class="tech-tag">Real-time Database</span>
+                            <span class="tech-tag">Cloud Functions</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-controls">
+                    <button class="carousel-btn" id="prevBtn">← Previous</button>
+                    <button class="carousel-btn" id="nextBtn">Next →</button>
+                </div>
+
+                <div class="carousel-indicators" id="indicators"></div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Get In Touch</h2>
+            <p>I'm always interested in hearing about new projects and opportunities. Whether you have a question or just want to say hi, feel free to reach out!</p>
+            <div class="contact-info">
+                <p><strong>📧 Email:</strong> <a href="mailto:muhammadrizky060@gmail.com">muhammadrizky060@gmail.com</a></p>
+                <p><strong>📱 Phone:</strong> <a href="tel:+6285270708929">+62 852-7070-8929</a></p>
+                <p><strong>💼 GitHub:</strong> <a href="https://github.com/mrzky" target="_blank">github.com/mrzky</a></p>
+                <p><strong>🔗 LinkedIn:</strong> <a href="https://linkedin.com/in/muhammad-rizky-bba959154" target="_blank">linkedin.com/in/muhammad-rizky-bba959154</a></p>
+            </div>
+        </section>
     </div>
 
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Muhammad Rizky. All rights reserved.</p>
+        </div>
+    </footer>
+
     <script>
-        const carouselStates = [
-            { currentIndex: 0, totalSlides: 3 },
-            { currentIndex: 0, totalSlides: 3 },
-            { currentIndex: 0, totalSlides: 2 },
-            { currentIndex: 0, totalSlides: 4 }
-        ];
+        // Carousel functionality
+        const carousel = document.getElementById('projectCarousel');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const indicatorsContainer = document.getElementById('indicators');
+        const totalSlides = document.querySelectorAll('.project-card').length;
+        let currentSlide = 0;
 
-        function moveCarousel(carouselId, direction) {
-            const state = carouselStates[carouselId];
-            state.currentIndex = (state.currentIndex + direction + state.totalSlides) % state.totalSlides;
-            updateCarousel(carouselId);
+        // Create indicators
+        for (let i = 0; i < totalSlides; i++) {
+            const indicator = document.createElement('div');
+            indicator.classList.add('indicator');
+            if (i === 0) indicator.classList.add('active');
+            indicator.addEventListener('click', () => goToSlide(i));
+            indicatorsContainer.appendChild(indicator);
         }
 
-        function goToSlide(carouselId, slideIndex) {
-            carouselStates[carouselId].currentIndex = slideIndex;
-            updateCarousel(carouselId);
-        }
+        const indicators = document.querySelectorAll('.indicator');
 
-        function updateCarousel(carouselId) {
-            const track = document.querySelector('[data-carousel="' + carouselId + '"]');
-            const dots = track.parentElement.querySelectorAll('.carousel-dot');
-            const state = carouselStates[carouselId];
+        function updateCarousel() {
+            carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
             
-            track.style.transform = 'translateX(-' + (state.currentIndex * 100) + '%)';
-            
-            dots.forEach(function(dot, index) {
-                dot.classList.toggle('active', index === state.currentIndex);
+            // Update indicators
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlide);
             });
+
+            // Update button states
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
         }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateCarousel();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateCarousel();
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Initialize carousel
+        updateCarousel();
     </script>
 </body>
 </html>
